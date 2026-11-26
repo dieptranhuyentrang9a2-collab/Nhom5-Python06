@@ -1,4 +1,3 @@
-
 from datetime import date, datetime
 
 from base_entity import BaseEntity
