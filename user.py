@@ -80,3 +80,14 @@ class User(BaseEntity):
             "salt": self.salt,
             "password_hash": self.password_hash
         }
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            id=data["id"],
+            username=data["username"],
+            full_name=data["full_name"],
+            email=data["email"],
+            role=data.get("role", "user"),
+            salt=data.get("salt"),
+            password_hash=data.get("password_hash")
+        )
