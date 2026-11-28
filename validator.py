@@ -1,5 +1,4 @@
 import re
-from datetime import datetime
 
 
 class Validator:
@@ -22,15 +21,3 @@ class Validator:
 
         pattern = r"^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$"
         return bool(re.fullmatch(pattern, email))
-
-    @staticmethod
-    def is_valid_date(value, fmt="%Y-%m-%d"):
-        """Kiểm tra chuỗi ngày đúng định dạng (mặc định YYYY-MM-DD)."""
-        if not isinstance(value, str):
-            return False
-
-        try:
-            datetime.strptime(value.strip(), fmt)
-            return True
-        except ValueError:
-            return False
