@@ -573,7 +573,6 @@ class TaskCard(RoundedPanel):
             fg=COLORS["muted"],
             font=(FONT_BODY, 8)
         ).pack(anchor="w")
-
         # Tiêu đề
         tk.Label(
             content,
@@ -585,55 +584,9 @@ class TaskCard(RoundedPanel):
             justify="left"
         ).pack(anchor="w", pady=(5, 6))
 
-        # Mô tả
-        if task.description:
-            tk.Label(
-                content,
-                text=task.description,
-                bg="white",
-                fg=COLORS["muted"],
-                font=(FONT_BODY, 9),
-                wraplength=260,
-                justify="left"
-            ).pack(anchor="w", pady=(0, 7))
-
-        # Nhãn ưu tiên
-        tk.Label(
-            content,
-            text=f"  {PRIORITIES.get(task.priority, task.priority)}  ",
-            bg=priority_bg,
-            fg=priority_fg,
-            font=(FONT_BODY, 8, "bold"),
-            padx=5,
-            pady=3
-        ).pack(anchor="w", pady=5)
-
-        # Người phụ trách
-        tk.Label(
-            content,
-            text=f"Người phụ trách: {task.assignee or 'Chưa phân công'}",
-            bg="white",
-            fg=COLORS["muted"],
-            font=(FONT_BODY, 8)
-        ).pack(anchor="w", pady=3)
-
-        # Hạn hoàn thành - tô đỏ nếu quá hạn
-        overdue = task.is_overdue()
-        due_text = task.due_date or "Chưa đặt hạn"
-        if overdue:
-            due_text += "  (quá hạn)"
-
-        tk.Label(
-            content,
-            text=f"Hạn hoàn thành: {due_text}",
-            bg="white",
-            fg=COLORS["red"] if overdue else COLORS["muted"],
-            font=(FONT_BODY, 8, "bold" if overdue else "normal")
-        ).pack(anchor="w", pady=3)
-
-        # Thanh nút
+        # Thanh nút (đưa lên cao để luôn nhìn thấy)
         actions = tk.Frame(content, bg="white")
-        actions.pack(fill="x", pady=(9, 0))
+        actions.pack(fill="x", pady=(4, 8))
 
         tk.Button(
             actions,
@@ -668,7 +621,53 @@ class TaskCard(RoundedPanel):
             padx=9
         ).pack(side="right")
 
-        # Gắn sự kiện kéo thả cho toàn bộ thẻ (trừ các nút bấm)
+        # Mô tả
+        if task.description:
+            tk.Label(
+                content,
+                text=task.description,
+                bg="white",
+                fg=COLORS["muted"],
+                font=(FONT_BODY, 9),
+                wraplength=260,
+                justify="left"
+            ).pack(anchor="w", pady=(0, 7))
+
+        # Nhãn ưu tiên
+        tk.Label(
+            content,
+            text=f"  {PRIORITIES.get(task.priority, task.priority)}  ",
+            bg=priority_bg,
+            fg=priority_fg,
+            font=(FONT_BODY, 8, "bold"),
+            padx=5,
+            pady=3
+        ).pack(anchor="w", pady=5)
+
+        # Người phụ trách
+        tk.Label(
+            content,
+            text=f"Người phụ trách: {task.assignee or 'Chưa phân công'}",
+            bg="white",
+            fg=COLORS["muted"],
+            font=(FONT_BODY, 8)
+        ).pack(anchor="w", pady=3)
+
+        # Hạn hoàn thành
+        overdue = task.is_overdue()
+        due_text = task.due_date or "Chưa đặt hạn"
+        if overdue:
+            due_text += "  (quá hạn)"
+
+        tk.Label(
+            content,
+            text=f"Hạn hoàn thành: {due_text}",
+            bg="white",
+            fg=COLORS["red"] if overdue else COLORS["muted"],
+            font=(FONT_BODY, 8, "bold" if overdue else "normal")
+        ).pack(anchor="w", pady=3)
+
+        # Gắn sự kiện kéo thả
         self._bind_drag(self.canvas)
 
     # ---------------- Các nút ----------------
