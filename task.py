@@ -2,8 +2,18 @@ from datetime import date, datetime
 
 from base_entity import BaseEntity
 
-STATUSES = ("todo", "doing", "done")
-PRIORITIES = ("low", "medium", "high")
+# Mã trạng thái / độ ưu tiên -> nhãn tiếng Việt hiển thị trên giao diện.
+# Dùng dict để vừa kiểm tra hợp lệ (`in`) vừa lấy được nhãn (`.get`).
+STATUSES = {
+    "todo": "Cần làm",
+    "doing": "Đang thực hiện",
+    "done": "Hoàn thành",
+}
+PRIORITIES = {
+    "low": "Thấp",
+    "medium": "Trung bình",
+    "high": "Cao",
+}
 
 
 class Task(BaseEntity):
